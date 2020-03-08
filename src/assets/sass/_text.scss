@@ -1,73 +1,31 @@
 //text
 .txt-site {
-	&.txt-line {
-		line-height: 20px;
-	}
+	line-height: 20px;
 	&.txt-big {
-		font-size: 44px;
+		font-size: 42pt;
 	}
 	&.txt-small {
-		font-size: 34px;
+		font-size: 32pt;
 	}
 	&.txt-micro {
-		font-size: 28px;
+		font-size: 26pt;
 	}
 	&.txt-standar {
-		font-size: 24px;
+		font-size: 22pt;
 	}
 	&.txt-title {
-		font-size: 20px;
-		line-height: 20px;
+		font-size: 18pt;
 	}
 	&.txt-subtitle {
-		font-size: 18px;
-		line-height: 20px;
-	}
-	&.txt-shadow {
-		text-shadow: 0 0 5px rgba(0,0,0,0.34);
+		font-size: 16pt;
 	}
 	&.txt-description {
-		font-size: 13px;
-		line-height: 20px;
+		font-size: 11pt;
 	}
-	&.txt-8 {
-		font-size: 10px;
-	}
-	&.txt-9 {
-		font-size: 11px;
-	}
-	&.txt-10 {
-		font-size: 12px;
-	}
-	&.txt-11 {
-		font-size: 13px;
-	}
-	&.txt-12 {
-		font-size: 14px;
-	}
-	&.txt-13 {
-		font-size: 15px;
-	}
-	&.txt-14 {
-		font-size: 16px;
-	}
-	&.txt-15 {
-		font-size: 17px;
-	}
-	&.txt-16 {
-		font-size: 18px;
-	}
-	&.txt-17 {
-		font-size: 19px;
-	}
-	&.txt-18 {
-		font-size: 20px;
-	}
-	&.txt-19 {
-		font-size: 21px;
-	}
-	&.txt-20 {
-		font-size: 22px;
+	@for $i from 1 through 1000 {
+		&.txt-#{$i} {
+	        font-size: #{$i}pt;
+	    }
 	}
 	&.txt-init {
 		color: $min-color;
@@ -156,12 +114,12 @@
 		color: $orange;
 	}
 	&.txt-bold {
-		font-weight: 500;
-		font-family: "FontFirstBold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-weight: 600;
+		// font-family: "FontFirstBold", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 	&.txt-extra-bold {
-		font-weight: 500;
-		font-family: "FontFirstExtraBold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-weight: 600;
+		// font-family: "FontFirstExtraBold", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 	&.txt-thin {
 		font-weight: 500;
@@ -213,5 +171,8 @@
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+	&.txt-shadow {
+		text-shadow: 0 0 15px rgba($color: #000000, $alpha: 0.34);
 	}
 }

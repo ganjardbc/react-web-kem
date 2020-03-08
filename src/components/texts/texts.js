@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import MUIDataTable from "mui-datatables-bitozen";
-import LoadingBar from "react-top-loading-bar";
-import PopUp from "../../pages/PopUpAlert";
 import FormTexts from "./formTexts";
+import FormQa from "./formQa";
 import api from "../../services/Api";
 
 let ct = require("../../modules/custom/customTable")
@@ -19,7 +18,8 @@ class Texts extends Component {
             dataTable: [],
             createVisible: false,
             editVisible: false,
-            savePopUpVisible: false,
+            formQaVisible: false,
+            linearProgress: false,
             table_limit: 5,
             table_page: 0,
             table_query: "",
@@ -42,86 +42,85 @@ class Texts extends Component {
         }
     }
 
+    openFormQa = (index = null) => {
+        this.setState({ formQaVisible: !this.state.formQaVisible, selectedIndex: index })
+    }
+
     openCreateForm = () => {
         this.setState({ createVisible: !this.state.createVisible })
-    };
+    }
 
     openEditForm = (index = null) => {
         this.setState({ editVisible: !this.state.editVisible, selectedIndex: index })
-    };
-
-    openDeletePopup = (index) => {
-        this.setState({ deletePopUpVisible: !this.state.deletePopUpVisible, selectedIndex: index })
-    };
-
-    openSavePopUp = () => {
-        this.setState({ savePopUpVisible: !this.state.savePopUpVisible })
-    };
-
-    startFetch = () => {
-        this.LoadingBar.continousStart()
-    }
-
-    onFinishFetch = () => {
-        if (typeof this.LoadingBar === "object") this.LoadingBar.complete()
     }
 
     componentDidMount() {
-        this.startFetch();
-        this.getData(this.state.table_limit, this.state.table_page);
-        console.log('id', localStorage.getItem('id'))
+        this.getData();
     }
 
-    handlePopUp = () => {
-        this.getData()
-        this.setState({
-            savePopUpVisible: false,
-            createVisible: false,
-            editVisible: false
-        })
+    linearProgress = () => {
+        this.setState({ linearProgress: !this.state.linearProgress })
     }
 
     handleSubmit = async (data) => {
-        let payload = {
-            "TextsName": data
-        }
-        console.info('payload ==> ', payload)
-        let response = await api.create('TEXTS').postTexts(payload)
+        let payload = data
+        let response = await api.create('MAIN').createBacaan(payload)
         if (response.ok && response.status === 200) {
-            this.openSavePopUp()
-            this.getData(this.state.table_limit, this.state.table_page)
+            if (response.data.status === 'S') {
+                alert(response.data.message)
+                this.openCreateForm()
+                this.getData()
+            } else {
+                alert(response.data.message)
+            }
         } else {
             if(response.data && response.data.message) alert(response.data.message)
         }
     }
 
     handleUpdate = async (data) => {
-        let payload = {
-            "id": this.state.rawData[this.state.selectedIndex].id,
-            "TextsName": data
-        }
-        console.info('payload ==> ', payload)
-        let response = await api.create('TEXTS').postTexts(payload)
-        if (response.ok && response.status === 200) {
-            this.openSavePopUp()
-            this.getData(this.state.table_limit, this.state.table_page)
-        } else {
-            if (response.data && response.data.message) alert(response.data.messagae)
+        var a = window.confirm('ubah data ini?')
+        if (a) {
+            let payload = {
+                "id_user": 1,
+                "id_bacaan": data.id,
+                "judul": data.judul,
+                "isi": data.isi
+            }
+            console.info('payload ==> ', payload)
+            let response = await api.create('MAIN').updateBacaan(payload)
+            if (response.ok && response.status === 200) {
+                if (response.data.status === 'S') {
+                    alert(response.data.message)
+                    this.openEditForm()
+                    this.getData()
+                } else {
+                    alert(response.data.message)
+                }
+            } else {
+                if(response.data && response.data.message) alert(response.data.message)
+            }
         }
     }
 
-    handleDelete = async (data) => {
-        let payload = {
-            "id": this.state.rawData[this.state.selectedIndex].id,
-            "TextsName": data
-        }
-        console.info('payload ==> ', payload)
-        let response = await api.create('TEXTS').deleteTexts(payload.id)
-        if (response.ok && response.status === 200) {
-            this.setState({ deletePopUpVisible: false })
-            this.getData(this.state.table_limit, this.state.table_page)
-        } else {
-            if (response.data && response.data.message) alert(response.data.message)
+    handleDelete = async (id) => {
+        var a = window.confirm('hapus data ini?')
+        if (a) {
+            let payload = {
+                "id_user": 1,
+                "id_bacaan": id
+            }
+            let response = await api.create('MAIN').deleteBacaan(payload)
+            if (response.ok && response.status === 200) {
+                if (response.data.status === 'S') {
+                    alert(response.data.message)
+                    this.getData()
+                } else {
+                    alert(response.data.message)
+                }
+            } else {
+                if (response.data && response.data.message) alert(response.data.message)
+            }
         }
     }
 
@@ -129,33 +128,34 @@ class Texts extends Component {
 
     options = ct.customOptions()
 
-    async getData(limit, number){
+    async getData(){
+        this.linearProgress()
+
         let param = {
             "id_user": 1
         }
 
-        let response = await api.create('MAIN').getAllPagingLatihan(param)
+        let response = await api.create('MAIN').getAllPagingBacaan(param)
         if(response.status === 200 && response.data.status === 'S'){
             let dataTable = response.data.data.map((value, index) => {
-                const { id, judul, jumlah_kata, done } = value;
+                const { id, judul, jumlah_kata } = value;
                 return [
                     index += (1 + (this.state.table_page * this.state.table_limit)),
                     id,
                     judul,
-                    jumlah_kata,
-                    done
+                    jumlah_kata
                 ]
             })
             this.setState({
-                rawData: response.data,
+                rawData: response.data.data,
                 dataTable
             })
-            this.onFinishFetch()
+            this.linearProgress()
         } else {
-            this.onFinishFetch()
+            this.linearProgress()
         }
         // this.getCountData()
-        console.log(response)
+        // console.log(response)
     }
 
     async getCountData() {
@@ -176,25 +176,31 @@ class Texts extends Component {
         "ID",
         "Judul",
         "Jumlah Kata",
-        "Status",
         {
             name: "Action",
             options: {
                 customBodyRender: (val, tableMeta) => {
                     return (
-                        <div>
+                        <div style={{width: '240px'}} className="display-flex-number">
                             <button
-                                className="btn btn-green btn-small-circle"
+                                className="btn btn-small btn-primary btn-radius"
                                 style={{ marginRight: 5 }}
-                                onClick={() =>
-                                    this.openEditForm(tableMeta.rowIndex)
-                                }
+                                onClick={() => {
+                                    this.openFormQa(tableMeta.rowData[1])
+                                }}
+                            >
+                                Lihat Soal & Jawaban
+                            </button>
+                            <button
+                                className="btn btn-primary btn-small-circle"
+                                style={{ marginRight: 5 }}
+                                onClick={() => this.openEditForm(tableMeta.rowIndex)}
                             >
                                 <i className="fa fa-lw fa-pencil-alt" />
                             </button>
                             <button
-                                className="btn btn-red btn-small-circle"
-                                onClick={() => this.openDeletePopup(tableMeta.rowIndex)}>
+                                className="btn btn-primary btn-small-circle"
+                                onClick={() => this.handleDelete(tableMeta.rowData[1])}>
                                 <i className="fa fa-lw fa-trash-alt" />
                             </button>
                         </div>
@@ -237,26 +243,16 @@ class Texts extends Component {
 
         return (
             <div className="main-content">
-                <LoadingBar onRef={ref => (this.LoadingBar = ref)} />
-                {/* <div className="col-2 content-right">
-                    <button
-                        type="button"
-                        className="btn btn-circle background-green"
-                        style={{ marginRight: 5 }}
-                        onClick={this.openCreateForm.bind(this)}
-                    >
-                        <i className="fa fa-1x fa-plus" />
-                    </button>
-                </div> */}
                 <div className="padding-5px">
                     <MuiThemeProvider theme={this.getMuiTheme()}>
                         <MUIDataTable
-                            title={"Latihan"}
+                            title={"Daftar Bacaan"}
                             key={textsCount}
                             data={this.state.dataTable}
                             columns={this.columns}
                             options={tableOptions}
                             buttonCreate={true}
+                            linearProgress={this.state.linearProgress}
                             onCreate={this.openCreateForm.bind(this)}
                         />
                     </MuiThemeProvider>
@@ -276,20 +272,10 @@ class Texts extends Component {
                         onClickSave={this.handleUpdate.bind(this)}
                     />
                 )}
-                {this.state.savePopUpVisible && (
-                    <PopUp
-                        type={"save"}
-                        class={"app-popup app-popup-show"}
-                        onClick={this.handlePopUp.bind(this)}
-                    />
-                )}
-                {this.state.deletePopUpVisible && (
-                    <PopUp
-                        type={"delete"}
-                        class={"app-popup app-popup-show"}
-                        onClickDelete={this.handleDelete}
-                        onClick={this.openDeletePopup}
-                    />
+                {this.state.formQaVisible && (
+                    <FormQa
+                        id_bacaan={this.state.selectedIndex}
+                        onClickClose={this.openFormQa} />
                 )}
             </div>
         );

@@ -14,24 +14,25 @@
 @import 'card';
 @import 'chat';
 @import 'tree';
+@import 'tree';
+@import 'accordion';
 @import 'login';
 @import 'slider';
-@import 'dropDown';
 @import 'search';
 @import 'complexMenu';
-@import 'ddlMenu';
+@import 'dropDown';
 
 * {
 	padding: 0;
 	border: 0;
 	margin: 0;
 	outline: none;
-	font-family: "FontFirst2", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "FontFirst", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 html {
 	@include greyScrollBar();
-	background-color: #edf1f5;
 	// overflow-x: hidden;
+	background-color: #f8f8f8;
 }
 
 a {
@@ -39,15 +40,15 @@ a {
 }
 
 .app-mobile {
-	display: none !important;
+	display: none;
 	@media (max-width: $max-width) {
-		display: block !important;
+		display: block;
 	}
 }
 
 .app-desktop {
 	@media (max-width: $max-width) {
-		display: none !important;
+		display: none;
 	}
 }
 
@@ -70,230 +71,97 @@ a {
 	}
 }
 
+.app-pointer {
+	cursor: pointer;
+}
+
 // layout
-// $size-side: 280px;
+// $size-side: 230px;
 // $size-side-min: 60px;
 
 .app {
 	position: relative;
 	width: 100%;
-	background-color: #edf1f5;
-	@include grid_2x(220px, 1fr);
+	@include grid_2x(230px, 1fr);
 	@include animate_2();
 	@media (max-width: $max-width) {
 		// @include grid_none();
 		@include grid_2x(60px, 1fr);
 	}
-
-	&.app-resize {
-		position: relative;
-		top: 0;
-		width: 100%;
-		height: 100vh;
-		@include grid_none();
-		.app-slide {
-			position: relative;
-			width: 100%;
-			height: 100vh;
-			background-color: #000;
-			overflow: hidden;
-			.slide-content {
-				position: relative;
-				width: 100%;
-				height: 100%;
-				z-index: 0;
-			}
-		}
-		.app-main {
-			position: relative;
-			width: 100%;
-			height: 100%;
-			// .app-place {
-			// 	position: absolute;
-			// 	top: 0;
-			// 	width: 100%;
-			// 	height: 100%;
-			// }
-		}
-	}
-
-
-	// $widthBigIcon: 70px;
-	&.app-side-big-icon {
-		@include grid_2x(70px, 1fr);
-		@media (max-width: $max-width) {
-			@include grid_2x(70px, 1fr);
-		}
-		.app-slide {
-			position: relative;
-			width: 70px;
-			height: 100vh;
-			@media (max-width: $max-width) {
-				width: 70px;
-			}
-			.slide-content {
-				position: fixed;
-				width: 70px;
-				@media (max-width: $max-width) {
-					width: 70px;
-				}
-			}
-		}
-		.app-panel {
-			.panel-content {
-				width: calc(100% - 90px);
-				@media (max-width: $max-width) {
-					width: calc(100% - 90px);
-				}
-			}
-		}
-		.app-place {
-			width: 100%;
-			left: 0px;
-			@media (max-width: $max-width) {
-				width: 100%;
-			}
-		}
-		.app-menu {
-			.content {
-				.list {
-					position: relative;
-					width: calc(100% - 10px);
-					// height: 50px;
-					padding: 10px 5px;
-					text-align: center;
-					@include grid_none();
-					.icn {
-						// @include post_center(absolute);
-						position: relative;
-						width: 100%;
-						font-size: 13px;
-						text-align: center;
-						@media (max-width: $max-width) {
-							font-size: 13px;
-						}
-					}
-					.ttl {
-						display: none;
-						// position: relative;
-						// width: 100%;
-						// font-size: 10px;
-						// text-align: center;
-						// line-height: 15px;
-						// @media (max-width: $max-width) {
-						// 	display: none;
-						// }
-					}
-					.icn-right {
-						display: none;
-					}
-				}
-				.submenu {
-					.submenu-sign {
-						display: none;
-					}
-					.submenu-content {
-						li {
-							.list {
-								width: calc(100%);
-								padding: 7.5px 0;
-							}
-						}
-					}
-				}
-			}
-		}
-		.app-space {
-			position: relative;
-			width: 100%;
-			.list {
-				position: relative;
-				width: calc(100% - 10px);
-				padding: 11px 5px;
-				@include grid_2x(1fr, 1fr);
-				.app-space-sign {
-					text-align: center;
-					@include column_n(2);
-				}
-				.app-space-text {
-					display: none;
-					@include column_n(1);
-				}
-				.app-space-icon {
-					font-size: 12px;
-					text-align: center;
-					@include column_n(1);
-				}
-			}
-		}
-		.app-title {
-			position: relative;
-			width: 100%;
-			@include grid_none();
-			.col-1 {
-				display: none;
-			}
-			.btn {
-				position: absolute;
-				top: 5px;
-				left: 0;
-				border-radius: 0;
-				width: 100% !important;
-				margin: auto;
-			}
-		}
-		.app-place {
-			left: 0px;
-			@media (max-width: $max-width) {
-				width: 100%;
-			}
-		}
-		.complex {
-			.complex-menu {
-				@include grid_none();
-				text-align: center;
-				.complex-icon {
-					text-align: center;
-					font-size: 12pt;
-				}
-				.complex-title {
-					display: none;
-				}
-				.complex-sign {
-					display: none;
-				}
-			}
-			.complex-list {
-				left: 70px;
-			}
-		}
-	}
-
+	// &.app-side-hide {
+	// 	@include grid_2x(0, 1fr);
+	// 	.app-slide {
+	// 		.slide-content {
+	// 			left: calc(0 - 230px);
+	// 		}
+	// 	}
+	// 	.app-panel {
+	// 		.panel-content {
+	// 			width: calc(100% - 90px);
+	// 		}
+	// 	}
+	// 	.app-place {
+	// 		width: calc(100% - 230px);
+	// 		left: 0px;
+	// 		@media (max-width: $max-width) {
+	// 			width: 100%;
+	// 		}
+	// 	}
+	// }
 	&.app-side-min {
 		@include grid_2x(60px, 1fr);
+		@include animate_2();
 		.app-slide {
 			position: relative;
 			width: 60px;
 			height: 100vh;
+			@include animate_2();
 			.slide-content {
 				position: fixed;
 				width: 60px;
+				@include animate_2();
+				.slide-content-panel {
+					.scp-title {
+						display: none;
+					}
+					.scp-button {
+						position: relative;
+						width: 100%;
+						text-align: center;
+					}
+				}
+			}
+		}
+		.app-main {
+			@include animate_2();
+			.main-content {
+				@include animate_2();
 			}
 		}
 		.app-panel {
-			@media (max-width: $max-width) {
-				width: calc(100% - 150px);
-			}
+			// position: relative;
+			width: 100%;
+			// height: 55px;
+			@include animate_2();
 			.panel-content {
 				width: calc(100% - 80px);
+				@include animate_2();
 				@media (max-width: $max-width) {
-					width: calc(100% - 200px);
+					width: calc(100% - 80px);
+				}
+			}
+			.panel-footer {
+				width: calc(100% - 80px);
+				@include animate_2();
+				@media (max-width: $max-width) {
+					width: calc(100% - 80px);
 				}
 			}
 		}
 		.app-place {
 			width: 100%;
 			left: 0px;
+			@include animate_2();
 			@media (max-width: $max-width) {
 				width: 100%;
 			}
@@ -336,12 +204,116 @@ a {
 			display: none;
 		}
 		.app-title {
+			position: relative;
+			width: 100%;
 			@include grid_none();
+			@include animate_2();
 			.col-1 {
 				display: none;
 			}
-			.col-2 {
-				text-align: center;
+			.btn {
+				position: absolute;
+				top: 5px;
+				left: 0;
+				border-radius: 0;
+				width: 100% !important;
+				margin: auto;
+			}
+		}
+	}
+
+	&.app-side-big-icon {
+		@include grid_2x(80px, 1fr);
+		@media (max-width: $max-width) {
+			@include grid_2x(60px, 1fr);
+		}
+		.app-slide {
+			position: relative;
+			width: 80px;
+			height: 100vh;
+			@media (max-width: $max-width) {
+				width: 60px;
+			}
+			.slide-content {
+				position: fixed;
+				width: 80px;
+				@media (max-width: $max-width) {
+					width: 60px;
+				}
+			}
+		}
+		.app-panel {
+			.panel-content {
+				width: calc(100% - 140px);
+				@media (max-width: $max-width) {
+					width: calc(100% - 102px);
+				}
+			}
+		}
+		.app-place {
+			width: 100%;
+			left: 0px;
+			@media (max-width: $max-width) {
+				width: 100%;
+			}
+		}
+		.app-menu {
+			.content {
+				.list {
+					position: relative;
+					width: calc(100% - 10px);
+					// height: 50px;
+					padding: 10px 5px;
+					text-align: center;
+					@include grid_none();
+					.icn {
+						// @include post_center(absolute);
+						position: relative;
+						width: 100%;
+						font-size: 13px;
+						text-align: center;
+						@media (max-width: $max-width) {
+							font-size: 13px;
+						}
+					}
+					.ttl {
+						position: relative;
+						width: 100%;
+						font-size: 10px;
+						text-align: center;
+						line-height: 15px;
+						@media (max-width: $max-width) {
+							display: none;
+						}
+					}
+					.icn-right {
+						display: none;
+					}
+				}
+				.submenu {
+					.submenu-sign {
+						display: none;
+					}
+					.submenu-content {
+						li {
+							.list {
+								width: calc(100%);
+								padding: 7.5px 0;
+							}
+						}
+					}
+				}
+			}
+		}
+		.app-space {
+			display: none;
+		}
+		.app-title {
+			position: relative;
+			width: 100%;
+			@include grid_none();
+			.col-1 {
+				display: none;
 			}
 			.btn {
 				position: absolute;
@@ -370,16 +342,15 @@ a {
 		@include animate_2();
 		@media (max-width: $max-width) {
 			width: 100%;
-			padding-top: 50px;
 		}
 	}
 
 	.app-title {
 		position: relative;
 		width: 100%;
-		height: 40px;
+		height: 45px;
 		padding: 5px 0;
-		@include grid_2x(1fr, 40px);
+		@include grid_2x(1fr, 45px);
 		.col-1 {
 			@include column_n(1);
 		}
@@ -390,37 +361,63 @@ a {
 	}
 
 	.app-slide {
-		position: relative;
-		width: 100%;
-		height: 100vh;
-		@include column_n(1);
-		@media (max-width: $max-width) {
-			position: absolute;
-			top: 0;
-			left: 0;
-		}
+		// position: relative;
+		// width: 100%;
+		// height: 100vh;
+		// @include column_n(1);
+		// @media (max-width: $max-width) {
+		// 	position: absolute;
+		// 	top: 0;
+		// 	left: 0;
+		// }
+		// @media (max-width: $max-width) {
+		// 	position: fixed;
+		// 	top: 0;
+		// 	left: 0;
+		// 	z-index: 600;
+		// 	background-color: rgba($color: $blue, $alpha: 0.54);
+		// 	@include column_n(1);
+		// }
 
-		&.app-slide-mobile {
-			display: block;
-			@media (max-width: $max-width) {
-				display: none;
-			}
-		}
+		// &.app-slide-mobile {
+		// 	display: block;
+		// 	@media (max-width: $max-width) {
+		// 		display: none;
+		// 	}
+		// }
+
+		@include animate_2();
 
 		.slide-content {
 			position: fixed;
 			top: 0;
 			left: 0;
-			width: 220px;
+			width: 230px;
 			height: 100vh;
 			z-index: 600;
+			border-right: $border1;
 			@include animate_2();
+			.slide-content-panel {
+				position: relative;
+				width: 100%;
+				height: 55px;
+				.scp-button {
+					text-align: center;
+				}
+			}
+			.slide-content-place {
+				position: relative;
+				width: 100%;
+				height: calc(100vh - 55px);
+				overflow-y: auto;
+				overflow-x: hidden;
+			}
 		}
 
 		.slide-list {
 			position: relative;
 			width: 100%;
-			height: calc(100vh - 50px);
+			height: calc(100vh - 55px);
 			overflow-y: auto;
 			overflow-x: hidden;
 		}
@@ -432,15 +429,19 @@ a {
 		width: 100%;
 		@include column_n(2);
 		@include animate_2();
+		// @media (max-width: $max-width) {
+		// 	@include column_n(1);
+		// }
 		.main-content {
 			position: relative;
-			width: 100%;
-			width: calc(100% - 10px);
-			padding: 5px;
+			width: calc(100%);
+			padding: 15px 0;
 			padding-top: 55px;
+			background-color: #f8f8f8;
+			@include animate_2();
 			@media (max-width: $max-width) {
 				width: 100%;
-				padding: 0 0;
+				padding: 15px 0;
 			}
 		}
 	}
@@ -448,95 +449,13 @@ a {
 	// app-space
 	.app-space {
 		position: relative;
-		width: 100%;
-		input {
-			display: none;
-			&:checked ~ .list {
-				cursor: pointer;
-				// background-color: rgba($color: #000000, $alpha: 0.1);
-				color: rgba($color: #fff, $alpha: 0.8);
-				.app-space-sign{
-					&:after {
-						opacity: 1;
-						@include animate_1();
-						-webkit-transform: rotate(45deg);
-						-moz-transform: rotate(45deg);
-							-ms-transform: rotate(45deg);
-							-o-transform: rotate(45deg);
-								transform: rotate(45deg);
-					}
-				}
-			}
-			&:checked ~ .app-space-content {
-				@include animate_1();
-				display: block;
-				// background-color: rgba($color: #000000, $alpha: 0.1);
-				// border-top: 0.5px rgba($color: #fff, $alpha: 0.84) solid;
-				// border-bottom: 0.5px rgba($color: #fff, $alpha: 0.84) solid;
-			}
-		}
-		.list {
-			position: relative;
-			width: calc(100% - 20px);
-			padding: 11px 10px;
-			font-size: 10px;
-			font-weight: 500;
-			color: rgba($color: #fff, $alpha: 0.7);
-			word-spacing: 1px;
-			letter-spacing: 1px;
-			display: block;
-			&:hover {
-				cursor: pointer;
-				color: rgba($color: #fff, $alpha: 0.8);
-				background-color: rgba($color: #000000, $alpha: 0.1);
-				@include animate_1();
-				.app-space-sign {
-					opacity: 1;
-				}
-			}
-
-			@include grid_3x(20px, 1fr, 20px);
-			.app-space-icon {
-				text-align: left;
-				@include column_n(1);
-			}
-			.app-space-text {
-				@include column_n(2);
-			}
-			.app-space-sign {
-				text-align: right;
-				@include column_n(3);
-			}
-		}
-		.app-space-content {
-			display: none;
-			@include animate_1();
-		}
-		.app-space-sign {
-			position: absolute;
-			width: 15px;
-			height: 15px;
-			border-radius: 2px;
-			right: 10px;
-			top: 10px;
-			opacity: 1;
-			&:after {
-				@include animate_1();
-				content: "";
-				position: absolute;
-				right: 0;
-				top: 5px;
-				width: 5px;
-				height: 5px;
-				border: solid rgba($color: #fff, $alpha: 0.7);
-				border-width: 0 1.5px 1.5px 0;
-				-webkit-transform: rotate(-45deg);
-				   -moz-transform: rotate(-45deg);
-				    -ms-transform: rotate(-45deg);
-				     -o-transform: rotate(-45deg);
-				        transform: rotate(-45deg);
-			}
-		}
+		width: calc(100% - 20px);
+		padding: 10px 10px;
+		font-size: 8pt;
+		font-weight: 600;
+		font-family: "FontFirstExtraBold";
+		color: rgba($color: #000, $alpha: 0.7);
+		@include animate_2();
 	}
 
 	// menu
@@ -544,6 +463,12 @@ a {
 		display: none;
 	}
 	.app-submenu-themes {
+		// position: fixed;
+		// top: 0;
+		// left: 230px;
+		// z-index: 100;
+		// width: 300px;
+		// height: 100vh;
 		background-color: rgba($color: #000000, $alpha: 0.1);
 		overflow: hidden;
 		border-radius: 10px;
@@ -556,12 +481,23 @@ a {
 		a {
 			display: block;
 			&.active {
-				@include animate_1();
-				color: #fff;
-				background-color: rgba($color: #000000, $alpha: 0.1);
+				// @include animate_1();
+				// color: #fff;
+				// background-color: rgba($color: #000000, $alpha: 0.1);
 				.content {
 					.list {
+						// color: rgba($color: #000, $alpha: 0.7);
+						// background-color: rgba($color: #000000, $alpha: 0.1);
 						color: #fff;
+						background-color: $blue;
+						.ttl {
+							// color: rgba($color: #000, $alpha: 0.7) !important;
+							color: #fff;
+						}
+						.icn {
+							// color: rgba($color: #000, $alpha: 0.7) !important;
+							color: #fff;
+						}
 					}
 				}
 			}
@@ -573,29 +509,27 @@ a {
 				position: relative;
 				width: calc(100% - 20px);
 				padding: 12px 10px;
-				color: rgba($color: #fff, $alpha: 0.9);
+				color: rgba($color: #000, $alpha: 0.9);
 				cursor: pointer;
 				border-radius: 0;
 				@include grid_3x(30px, 1fr, 30px);
-				@include animate_2();
+				// @include animate_2();
 				&:hover {
-					@include animate_1();
-					color: #fff;
+					// @include animate_1();
+					color: rgba($color: #000, $alpha: 0.7);
 					background-color: rgba($color: #000000, $alpha: 0.1);
+					// .icn {
+					// 	color: #fff;
+					// }
 				}
 				&:hover .app-submenu {
 					display: block;
 				}
-				&:active {
-					@include animate_1();
-					color: #fff;
-					background-color: rgba($color: #000000, $alpha: 0.1)
-				}
-				&.active {
-					@include animate_1();
-					color: #fff;
-					background-color: rgba($color: #000000, $alpha: 0.1)
-				}
+				// &:active {
+				// 	@include animate_1();
+				// 	color: #fff;
+				// 	background-color: $blue;
+				// }
 				.new {
 					position: relative;
 					width: 20px;
@@ -611,7 +545,8 @@ a {
 					position: relative;
 					width: 100%;
 					padding: 3px 0;
-					font-size: 10px;
+					font-size: 11px;
+					color: rgba($color: #000, $alpha: 0.7);
 				}
 				.ttl {
 					position: relative;
@@ -619,23 +554,35 @@ a {
 					line-height: 20px;
 					font-size: 12px;
 					font-weight: 500;
-					font-family: "FontFirstBold", "Helvetica Neue", Helvetica, Arial, sans-serif;
-					letter-spacing: 0.5px;
+					font-family: "FontFirst", "Helvetica Neue", Helvetica, Arial, sans-serif;
+					letter-spacing: 0.2px;
 				}
 			}
 
 			.submenu {
+				// &:hover {
+				// 	background-color: rgba($color: #000000, $alpha: 0.1);
+				// 	color: rgba($color: #000, $alpha: 0.7);
+				// }
 				input {
 					display: none;
 					&:checked ~ .list {
-						background-color: rgba($color: #000000, $alpha: 0.1);
-						.submenu-sign:after {
-							@include animate_1();
-							-webkit-transform: rotate(45deg);
-							   -moz-transform: rotate(45deg);
-							    -ms-transform: rotate(45deg);
-							     -o-transform: rotate(45deg);
-							        transform: rotate(45deg);
+						// background-color: rgba($color: #000000, $alpha: 0);
+						// color: rgba($color: #000, $alpha: 0.7);
+						// .icn {
+						// 	color: rgba($color: #000, $alpha: 0.7);
+						// }
+						.submenu-sign {
+							&:after {
+								// border: solid rgba($color: #000, $alpha: 0.7);
+								// border-width: 0 2px 2px 0;
+								@include animate_1();
+								-webkit-transform: rotate(45deg);
+								   -moz-transform: rotate(45deg);
+									-ms-transform: rotate(45deg);
+									 -o-transform: rotate(45deg);
+										transform: rotate(45deg);
+							}
 						}
 					}
 					&:checked ~ .submenu-content {
@@ -656,7 +603,7 @@ a {
 						top: 5px;
 						width: 5px;
 						height: 5px;
-						border: solid rgba($color: #fff, $alpha: 0.7);
+						border: solid rgba($color: #000, $alpha: 0.7);
 						border-width: 0 2px 2px 0;
 						-webkit-transform: rotate(-45deg);
 						   -moz-transform: rotate(-45deg);
@@ -668,15 +615,26 @@ a {
 				.submenu-content {
 					position: relative;
 					width: 100%;
-					background-color: rgba($color: #000000, $alpha: 0.1);
+					background-color: #fff;
+					// background-color: rgba($color: #000000, $alpha: 0.1);
+					// background-color: $blue;
+					// color: #fff;
 					display: none;
 					@include animate_1();
 					li {
 						.list {
 							width: calc(100% - 30px);
 							padding: 12px 15px;
+							&:hover {
+								background-color: rgba($color: #000000, $alpha: 0.1);
+								// background-color: #f5f5f5;
+							}
+							.ttl {
+								color: rgba($color: #000, $alpha: 0.9);
+							}
 							.icn {
 								font-size: 9px;
+								color: rgba($color: #000, $alpha: 0.9);
 							}
 						}
 					}
@@ -690,6 +648,7 @@ a {
 	.app-panel {
 		position: relative;
 		width: 100%;
+		@include animate_2();
 		// @media (max-width: $max-width) {
 		// 	height: 80px;
 		// }
@@ -697,19 +656,19 @@ a {
 			position: fixed;
 			top: 0;
 			right: 0;
-			width: calc(calc(100% - 90px) - 150px);
-			height: 40px;
+			width: calc(100% - 250px);
+			height: 45px;
 			padding: 5px 10px;
 			background-color: #fff;
-			border-bottom: $border1;
+			// box-shadow: 0 1px 15px 0 rgba(154,161,171,.15);
+			border-radius: 0;
 			z-index: 500;
+			border-bottom: $border;
 			@include grid_2x(350px, 1fr);
 			@include animate_2();
 			// @include grid_gap(20px);
 			@media (max-width: $max-width) {
-				position: fixed;
 				width: calc(100% - 80px);
-				right: 0;
 				@include grid_2x(50px, 1fr);
 			}
 			.col-1 {
@@ -727,6 +686,17 @@ a {
 			display: inline-block;
 			vertical-align: top;
 		}
+		.panel-footer {
+			position: fixed;
+			bottom: 0;
+			right: 0;
+			width: calc(100% - 250px);
+			height: 45px;
+			padding: 5px 10px;
+			background-color: #fff;
+			border-top: $border;
+			z-index: 100;
+		}
 	}
 
 	.app-footer {
@@ -739,15 +709,21 @@ a {
 
 	.app-small-profile {
 		position: relative;
-		height: 40px;
-		padding: 0 5px;
+		height: 45px;
+		padding: 0 10px;
 		margin-left: 15px;
 		// border-left: $border;
 		// border-right: $border;
-		border-radius: 40px;
+		border-radius: 45px;
 		cursor: pointer;
 		@include grid_2x(30px, 1fr);
 		@include grid_gap(10px);
+		@media (max-width: $max-width) {
+			@include grid_none();
+			padding: 0 7px;
+			border-left: 0;
+			border-right: 0;
+		}
 		&:hover {
 			@include animate_1();
 			background-color: #f5f5f5;
@@ -763,9 +739,15 @@ a {
 			position: relative;
 			text-align: left;
 			@include column_n(2);
+			@media (max-width: $max-width) {
+				display: none;
+			}
 		}
 		.image {
 			@include post_top(relative);
+			@media (max-width: $max-width) {
+				top: 22px;
+			}
 		}
 		.ttl {
 			@include post_top(relative);
@@ -779,7 +761,7 @@ a {
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba($color: $blue, $alpha: 0.34);
+		background-color: rgba($color: $blue, $alpha: 0.54);
 		z-index: 1000;
 		overflow-y: auto;
 		display: none;
@@ -789,27 +771,23 @@ a {
 			display: block;
 			@include animate_2();
 		}
-		&:not(:first-child) {
-			@include animate_2();
-		}
 		.popup-panel {
 			position: relative;
 			width: calc(100% - 30px);
-			height: 40px;
-			padding: 5px 15px;
+			padding: 10px 15px;
+			// background-color: #fff;
 			border-bottom: $border1;
-			color: $txt-84-color;
 		}
-		.popup-title {
-			@include post_center(relative);
-			color: $txt-84-color;
-			font-weight: 600;
-			font-size: 16px;
+		.popup-place {
+			display: none;
+			&.active {
+				display: block;
+			}
 		}
 		.popup-content {
 			position: relative;
 			margin: auto;
-			width: 1100px;
+			width: 1000px;
 			@media (max-width: $max-width) {
 				width: calc(100% - 30px);
 				margin: 0 15px;
@@ -818,7 +796,7 @@ a {
 		.popup-content-mikro {
 			position: relative;
 			margin: auto;
-			width: 450px;
+			width: 400px;
 			@media (max-width: $max-width) {
 				width: calc(100% - 30px);
 				margin: 0 15px;
@@ -851,38 +829,23 @@ a {
 			overflow-y: auto;
 			@include transparantScrollBar();
 		}
-		.popup-content-grid {
-			position: relative;
-			width: 100%;
-			@include grid_2x(230px, 1fr);
-			.popup-col-1 {
-				@include column_n(1);
-			}
-			.popup-col-2 {
-				@include column_n(2);
-			}
-		}
-		.popup-scroll {
-			position: relative;
-			width: 100%;
-			max-height: calc(100vh - 130px);
-			overflow-y: auto;
-		}
-		.popup-alert {
-			@include post_center(absolute);
-			overflow: hidden;
-			width: 350px;
+		.popup-btn-close {
+			position: absolute;
+			top: -15px;
+			right: -15px;
+			z-index: 2;
 		}
 	}
 
 	.app-menu-popup {
 		position: absolute;
+		top: 0;
 		right: 0;
 		width: 350px;
 		background-color: #fff;
-		border: $border;
-		border-radius: 10px;
-		overflow: hidden;
+		border: $border1;
+		border-radius: 5px;
+		// overflow: hidden;
 		z-index: 100 !important;
 		box-shadow: $shadow;
 		@media (max-width: $max-width) {
@@ -900,10 +863,9 @@ a {
 				padding: 15px;
 				list-style-type: none;
 				text-align: left;
-				font-size: 10pt;
+				font-size: 11pt;
 				color: $txt-84-color;
 				cursor: pointer;
-				font-family: "FontFirstBold", "Helvetica Neue", Helvetica, Arial, sans-serif;
 				&:hover {
 					background-color: #f5f5f5;
 				}
@@ -918,11 +880,26 @@ a {
 			max-height: 300px;
 			overflow-y: auto;
 		}
+		.app-menu-sign {
+			position: absolute;
+			top: -20px;
+			right: 50px;
+			color: #fff;
+		}
+	}
+
+	.app-popup-bottom {
+		position: fixed;
+		bottom: 0;
+		right: 0;
+		width: 1000px;
+		height: 500px;
+		z-index: 2000;
 	}
 
 	// app side page
 	$hgAppPage: calc(100vh - 50px);
-	$hgAppPage2: calc(100vh - 110px);
+	$hgAppPage2: calc(100vh - 170px);
 	.app-resize-page {
 		position: relative;
 		width: 100%;
@@ -973,7 +950,8 @@ a {
 			overflow-x: hidden;
 			@include transparantScrollBar();
 			&.no-header {
-				height: calc(100vh - 50px);
+				height: calc(100vh - 110px);
+				// background-color: #000;
 			}
 		}
 		.a-s-p-pad {
@@ -983,10 +961,14 @@ a {
 		}
 	}
 
+	// app side page
+	// $hgAppPage: calc(100vh - 120px);
+	// $hgAppPage2: calc(100vh - 185px);
 	.app-side-page {
 		position: relative;
-		width: 100%;
+		width: calc(100% - 30px);
 		height: $hgAppPage;
+		margin: 0 15px;
 		overflow: hidden;
 		.a-s-p-main {
 			position: absolute;
@@ -995,23 +977,168 @@ a {
 			width: 100%;
 			height: 100%;
 			@include animate_2();
+			@include grid_2x(30px, 1fr);
+			&.op-a-s-p-main {
+				@include animate_none();
+				@include grid_2x(290px, 1fr);
+			}
+
+			.a-s-p-navigator {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				.a-s-p-list {
+					position: relative;
+					width: 30px;
+					height: 100%;
+					ul {
+						li {
+							position: relative;
+							width: 100%;
+							list-style: none;
+							padding: 0 0;
+							cursor: pointer;
+							border-radius: 5px;
+							@include animate_none();
+							&:hover {
+								background-color: #f8f8f8;
+								// @include animate_none();
+							}
+							.top {
+								writing-mode: vertical-rl;
+							    text-orientation: mixed;
+
+							    -webkit-transform: translate(0, 0);
+							       -moz-transform: translate(0, 0);
+							        -ms-transform: translate(0, 0);
+							         -o-transform: translate(0, 0);
+							            transform: translate(0, 0);
+
+							    text-transform: uppercase;
+								font-size: 12px;
+								font-weight: 600;
+								padding: 15px 0;
+								text-align: center;
+								color: $txt-84-color;
+
+								.ttl {
+									line-height: 30px;
+								}
+								.cl {
+									display: none;
+								}
+							}
+							.mid {
+								display: none;
+							}
+							&.a-s-p-open {
+								position: absolute;
+								top: 0;
+								left: 40px;
+								width: 230px;
+								height: $hgAppPage;
+								border-radius: 0;
+								z-index: 100;
+								cursor: default;
+								background-color: #fff;
+								// border-top: $border;
+								// border-right: $border;
+								@include animate_none();
+								&:hover {
+									background-color: #fff;
+								}
+								.top {
+									position: relative;
+									width: 100%;
+									height: 35px;
+									padding: 0 0;
+									border-bottom: $border;
+
+									writing-mode: horizontal-tb;
+									text-align: left;
+									text-orientation: unset;
+
+									-webkit-transform: translate(0, 0);
+								       -moz-transform: translate(0, 0);
+								        -ms-transform: translate(0, 0);
+								         -o-transform: translate(0, 0);
+								            transform: translate(0, 0);
+
+								    @include grid_2x(1fr, 35px);
+								    .ttl {
+								    	line-height: 35px;
+								    	padding-left: 10px;
+								    }
+								    .cl {
+								    	display: block;
+								    }
+								}
+								.mid {
+									position: relative;
+									width: 100%;
+									height: calc(100vh - 160px);
+									display: block;
+									overflow-y: auto;
+								}
+							}
+						}
+					}
+				}
+			}
+			.a-s-p-item-navigator {
+				position: relative;
+				width: calc(100% - 20px);
+				padding: 10px;
+				border-bottom: $border;
+				font-size: 11pt;
+				color: $txt-54-color;
+				&:hover {
+					background-color: #f5f5f5;
+					color: $txt-84-color;
+					cursor: pointer;
+				}
+			}
+			.a-s-p-place {
+				position: relative;
+				width: 100%;
+				// @include animate_2();
+				.a-s-p-top {
+					position: relative;
+					width: 100%;
+					height: 55px;
+				}
+				.a-s-p-mid {
+					position: relative;
+					// padding: 0 15px;
+					// width: calc(100% - 30px);
+					width: 100%;
+					height: $hgAppPage2;
+					overflow-y: auto;
+					overflow-x: hidden;
+				}
+				.a-s-p-pad {
+					position: relative;
+					width: calc(100% - 15px);
+					padding: 0 7.5px;
+				}
+			}
 		}
 		.a-s-p-side {
 			position: absolute;
 			top: 0;
-			right: -450px;
-			width: 450px;
+			right: -300px;
+			width: 300px;
 			height: 100%;
 			// background-color: $blue;
 			// display: inline-block;
 			// vertical-align: top;
 			@include animate_2();
 		}
-	
+
 		&.op-app-side {
 			// @include grid_2x(1fr, 300px);
 			.a-s-p-main {
-				width: calc(100% - 450px);
+				width: calc(100% - 315px);
 				@include animate_2();
 			}
 			.a-s-p-side {
@@ -1019,129 +1146,23 @@ a {
 				@include animate_2();
 			}
 		}
-
-		.a-s-p-place {
-			position: relative;
-			width: 100%;
-			background-color: #fff;
-			// display: none;
-			// @include animate_2();
-			&.a-s-p-content {
-				display: none;
-				&.active {
-					display: block;
-				}
-			}
-		}
-
-		.a-s-p-top {
-			position: relative;
-			width: 100%;
-			height: 45px;
-			overflow: hidden;
-			padding: 7.5px 0;
-		}
-		.a-s-p-mid {
-			position: relative;
-			// padding: 0 15px;
-			// width: calc(100% - 30px);
-			width: 100%;
-			height: $hgAppPage2;
-			overflow-y: auto;
-			overflow-x: hidden;
-			@include transparantScrollBar();
-			&.no-header {
-				height: calc(100vh - 50px);
-			}
-		}
-		.a-s-p-pad {
-			position: relative;
-			width: calc(100% - 15px);
-			padding: 0 7.5px;
-		}
 	}
 
-	.app-open-close {
+}
+
+// kanban
+$hgKanbanBoard: calc(100vh - 235px);
+$hgKanbanCard: calc(100vh - 230px);
+
+.app-kanban {
 		position: relative;
-		width: 100%;
-		.app-open-close-input {
-			display: none;
-			&:checked ~ .app-open-close-content {
-				display: none;
-				@include animate_1();
-			}
-			&:checked ~ .grid {
-				.col-2 {
-					label {
-						.app-open-close-icon {
-							&:after {
-								@include animate_1();
-								top: 12px;
-								-webkit-transform: rotate(45deg);
-								   -moz-transform: rotate(45deg);
-									-ms-transform: rotate(45deg);
-									 -o-transform: rotate(45deg);
-										transform: rotate(45deg);
-							}
-						}
-					}
-				}
-			}
-		}
-		.app-open-close-icon {
-			position: relative;
-			width: 35px;
-			height: 35px;
-			line-height: 35px;
-			border: 1px rgba($color: #000000, $alpha: 0.1) solid;
-			cursor: pointer;
-			border-radius: 35px;
-			display: inline-block;
-			vertical-align: top;
-			&:hover {
-				border: 1px rgba($color: #000000, $alpha: 0.2) solid;
-			}
-			&:after {
-				@include animate_1();
-				content: "";
-				position: absolute;
-				right: 13px;
-				top: 15px;
-				width: 6px;
-				height: 6px;
-				border: solid rgba($color: #000, $alpha: 0.7);
-				border-width: 0 2px 2px 0;
-				-webkit-transform: rotate(-135deg);
-				   -moz-transform: rotate(-135deg);
-					-ms-transform: rotate(-135deg);
-					 -o-transform: rotate(-135deg);
-						transform: rotate(-135deg);
-			}
-		}
-		.app-open-close-content {
-			display: block;
-			@include animate_1();
-		}
-	}
-	
-
-	.app-pointer {
-		cursor: pointer;
-	}
-
-
-	// kanban
-	$hgKanbanBoard: calc(100vh - 200px);
-	$hgKanbanCard: calc(100vh - 260px);
-
-	.app-kanban {
-		position: relative;
-		width: 100%;
-		padding: 0 0;
+		width: calc(100% - 10px);
+		padding: 0 5px;
 		display: flex;
 		// align-items: center;
 		// flex-gap: 10px;
 		overflow-x: auto;
+		cursor: default;
 		.a-k-board {
 			position: relative;
 			width: 300px;
@@ -1160,7 +1181,7 @@ a {
 				padding: 2.5px 10px;
 				background-color: #fff;
 				color: $txt-84-color;
-				font-size: 13px;
+				font-size: 11pt;
 				font-weight: 500;
 				border-bottom: $border;
 			}
@@ -1189,85 +1210,32 @@ a {
 			overflow: hidden;
 			// border: $border;
 			background-color: #fff;
+			box-shadow: $shadow;
+
 			color: $txt-84-color;
 			font-size: 11pt;
+			&:hover {
+				cursor: pointer;
+				background-color: #f8f8f8;
+				box-shadow: $shadow-big;
+				@include animate_1();
+			}
 		}
-	}
-
 }
 
-.time_picker_container {
-	// z-index: 100;
-	.react_times_button {
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, .15) !important;
-		-moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, .15) !important;
-		-webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, .15) !important;
-		border-radius: 5px;
-		border: $border1;
-		overflow: hidden;
-		&.time_picker_preview {
-			height: 40px;
-			&.disabled {
-				background-color: #E6E6E6 !important;
-			}
-		}
-		.wrapper {
-			.preview_container {
-				height: 40px;
-				line-height: 40px;
-				svg {
-					top: 9px;
-					width: 20px;
-					height: 20px;
-				}
-			}
-		}
-	}
-	.outside_container {
-		&.active {
-			.modal_container {
-				@include animate_1();
-				display: block;
-				z-index: 1000 !important;
-			}
-		}
-		.modal_container {
-			@include animate_1();
-			display: none;
-			min-width: 300px !important;
-			width: 100% !important;
-			margin-bottom: 20px;
-			-webkit-transform: scale(1) translateY(0px) !important;
-			   -moz-transform: scale(1) translateY(0px) !important;
-			    -ms-transform: scale(1) translateY(0px) !important;
-			     -o-transform: scale(1) translateY(0px) !important;
-			        transform: scale(1) translateY(0px) !important;
-			.time_picker_modal_header {
-				background-color: $blue !important;
-			}
-			.time_picker_modal_footer {
-				background-color: $blue !important;
-			}
-			.picker_pointer {
-				background-color: $blue !important;
-			}
-			.picker_center {
-				background-color: $blue !important;
-			}
-			.pointer_drag {
-				background-color: $blue !important;
-			}
-		}
-	}
-	.picker_container {
-		margin: auto;
-		margin-top: 0;
-		margin-bottom: 20px;
-		z-index: 100;
-	}
-	.time_picker_preview {
-		&.disabled {
-			background-color: #E6E6E6 !important;
-		}
+
+.mosaic {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	z-index: 1000;
+	background-color: #fff;
+}
+
+.dg {
+	.a {
+		margin-top: 65px !important;
 	}
 }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import MUIDataTable from "mui-datatables-bitozen";
-import LoadingBar from "react-top-loading-bar";
 import PopUp from "../../pages/PopUpAlert";
 import FormTraining from "./formTraining";
 import FormReads from "./reads";
@@ -22,6 +21,7 @@ class Training extends Component {
             editVisible: false,
             savePopUpVisible: false,
             readsPopUpVisible: false,
+            linearProgress: false,
             table_limit: 5,
             table_page: 0,
             table_query: "",
@@ -65,18 +65,12 @@ class Training extends Component {
         this.setState({ savePopUpVisible: !this.state.savePopUpVisible })
     };
 
-    startFetch = () => {
-        this.LoadingBar.continousStart()
-    }
-
-    onFinishFetch = () => {
-        if (typeof this.LoadingBar === "object") this.LoadingBar.complete()
+    linearProgress = () => {
+        this.setState({ linearProgress: !this.state.linearProgress })
     }
 
     componentDidMount() {
-        this.startFetch();
         this.getData(this.state.table_limit, this.state.table_page);
-        console.log('id', localStorage.getItem('id'))
     }
 
     handlePopUp = () => {
@@ -137,6 +131,8 @@ class Training extends Component {
     options = ct.customOptions()
 
     async getData(limit, number){
+        this.linearProgress()
+
         let param = {
             "id_user": 1
         }
@@ -157,12 +153,10 @@ class Training extends Component {
                 rawData: response.data,
                 dataTable
             })
-            this.onFinishFetch()
+            this.linearProgress()
         } else {
-            this.onFinishFetch()
+            this.linearProgress()
         }
-        // this.getCountData()
-        console.log(response)
     }
 
     async getCountData() {
@@ -189,20 +183,21 @@ class Training extends Component {
             options: {
                 customBodyRender: (val, tableMeta) => {
                     return (
-                        <div>
+                        <div className="display-flex-normal">
                             <button
-                                className="btn btn-primary btn-radius"
+                                className="btn btn-small btn-primary btn-radius"
                                 style={{ marginRight: 5 }}
                                 onClick={() => {
                                     this.openReadsForm()
                                     this.setState({
-                                        id_bacaan: tableMeta.rowIndex[1]
+                                        id_bacaan: tableMeta.rowData[1]
                                     })
+                                    console.log(tableMeta.rowData[1])
                                 }}
                             >
                                 Lihat Bacaan
                             </button>
-                            <button
+                            {/* <button
                                 className="btn btn-primary btn-small-circle"
                                 style={{ marginRight: 5 }}
                                 onClick={() =>
@@ -215,7 +210,7 @@ class Training extends Component {
                                 className="btn btn-primary btn-small-circle"
                                 onClick={() => this.openDeletePopup(tableMeta.rowIndex)}>
                                 <i className="fa fa-lw fa-trash-alt" />
-                            </button>
+                            </button> */}
                         </div>
                     )
                 }
@@ -256,7 +251,6 @@ class Training extends Component {
 
         return (
             <div className="main-content">
-                <LoadingBar onRef={ref => (this.LoadingBar = ref)} />
                 <div className="padding-5px">
                     <MuiThemeProvider theme={this.getMuiTheme()}>
                         <MUIDataTable
@@ -266,6 +260,7 @@ class Training extends Component {
                             columns={this.columns}
                             options={tableOptions}
                             buttonCreate={true}
+                            linearProgress={this.state.linearProgress}
                             onCreate={this.openCreateForm.bind(this)}
                         />
                     </MuiThemeProvider>

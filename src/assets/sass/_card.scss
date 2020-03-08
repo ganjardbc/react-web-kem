@@ -2,24 +2,22 @@
 .card {
     position: relative;
     width: calc(100% - 10px);
-    border-radius: 5px;
+    border-radius: 7.5px;
     background-color: #fff;
-    border: $border1;
+    border: $border;
+    // box-shadow: 0 0 10px 0 rgba(154,161,171,.15);
     margin: 5px;
     overflow: hidden;
     &:hover {
         @include animate_1();
         box-shadow: 0 0 30px 0 rgba(154,161,171,.34);
-    }
-    &.no-hover {
-        &:hover {
-            box-shadow: 0 0 0 0;
+        .overlay {
+            @include animate_2();
+            opacity: 1;
         }
     }
-    &.mobile-minimum {
-        @media (max-width: $max-width) {
-            min-width: 1200px;
-        }
+    &.no-overflow {
+        overflow: visible;
     }
     &.no-margin {
         margin: 0 0;
@@ -45,6 +43,66 @@
     }
     .card-left {
         @include post_middle(absolute);
+    }
+
+    .overlay {
+        position: absolute;
+        width: calc(100% - 30px);
+        padding: 15px;
+        bottom: 0;
+        font-size: 13px;
+        opacity: 0;
+
+        // style
+        color: $txt-84-color;
+        background-color: rgba($color: #fff, $alpha: 0.84);
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+
+        // animation
+        @include animate_2();
+        &.left {
+            position: absolute;
+            width: calc(60% - 30px);
+            height: calc(100% - 30px);
+            padding: 15px;
+            left: 0;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 0;
+            border-bottom-right-radius: 15px;
+        }
+        &.right {
+            position: absolute;
+            width: calc(60% - 30px);
+            height: calc(100% - 30px);
+            padding: 15px;
+            right: 0;
+            border-top-right-radius: 0;
+            border-top-left-radius: 15px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 15px;
+        }
+        &.full {
+            position: absolute;
+            width: calc(100% - 30px);
+            height: calc(100% - 30px);
+            padding: 15px;
+            left: 0;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+}
+
+.card-list {
+    position: relative;
+    width: calc(100% - 20px);
+    padding: 10px;
+    background-color: #fff;
+    &.active {
+        background-color: $green;
     }
 }
 
@@ -94,8 +152,9 @@
 
 .card-notif {
     position: relative;
-    width: calc(100% - 30px);
-    padding: 15px;
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-bottom: $border;
     @include grid_2x(50px, 1fr);
     &:hover {
         @include animate_1();
@@ -257,7 +316,7 @@
         }
         .page-link {
             padding: 10px;
-            height: 40px;
+            height: 45px;
             border: $border;
             border-radius: 5px;
             margin: 0 5px;
@@ -363,8 +422,8 @@
         width: 100%;
         .ip {
             position: relative;
-            width: calc(100% - 30px);
-            padding: 12px 15px;
+            width: calc(100% - 10px);
+            padding: 12px 5px;
             background-color: #fff;
             color: $txt-84-color;
             font-size: 13px;
@@ -413,11 +472,15 @@
     .double {
         position: relative;
         height: 40px;
-        border: 1px rgba(0,0,0,0.1) solid;
+        border-bottom: 2px rgba(0,0,0,0.1) solid;
         background-color: #fff;
-        border-radius: 5px;
+        border-radius: 0;
         overflow: hidden;
         display: flex;
+        &:hover {
+            border-bottom: 2px $blue solid;
+            @include animate_1();
+        }
     }
     .content {
         position: absolute;
@@ -445,19 +508,44 @@
             width: calc(100% - 30px) !important;
             border: 0 solid #000;
         }
-        .rdrCalendarWrapper {
+        // .rdr-Calendar {
+        //     position: relative;
+        //     width: calc(100%) !important;
+        //     top: 0;
+        // }
+        .rdr-Calendar {
             position: relative;
-            width: calc(100%);
-            top: -15px;
-            .rdrMonthAndYearWrapper {
+            width: calc(100%) !important;
+            top: 0;
+            .rdr-MonthAndYear {
                 padding: 0 0;
             }
-            .rdrMonthAndYearPickers {
+            .rdr-MonthAndYearPickers {
                 width: 100% !important;
             }
-            .rdrMonth {
+            .rdr-Month {
                 padding: 0 0;
                 width: 100% !important;
+            }
+            .rdr-WeekDays {
+                padding: 0 0;
+                width: 100% !important;
+                .rdr-WeekDay {
+                    width: calc(100% / 7) !important;
+                }
+            }
+            .rdr-Days {
+                padding: 0 0;
+                width: 100% !important;
+                span {
+                    width: calc(100% / 7) !important;
+                    .rdr-Day {
+                        width: 100% !important;
+                    }
+                    .rdr-Sunday {
+                        color: $red;
+                    }
+                }
             }
         }
     }
@@ -469,61 +557,31 @@
     width: 100%;
 }
 
-.card-form {
+.circle-notif {
     position: relative;
-    width: 100%;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px rgba(0,0,0,0.1) solid;
-    .cf-header {
-        position: relative;
-        width: calc(100% - 30px);
-        padding: 15px;
+    // min-width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    line-height: 20px;
+    padding: 0 6px;
+
+    text-align: center;
+    background-color: $orange;
+    color: #fff;
+    font-size: 9pt;
+    font-weight: 600;
+    &.float-top {
+        position: absolute;
+        top: -5px;
+        right: -5px;
     }
-    .cf-body {
-        position: relative;
-        width: calc(100% - 30px);
-        padding: 0 15px;
-        // background-color: #f8f8f8;
-    }
-    .cf-footer {
-        position: relative;
-        width: calc(100% - 30px);
-        padding: 15px;
-    }
-    .cf-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: $txt-84-color;
-    }
-    .cf-subtitle {
-        font-size: 13px;
-        font-weight: 500;
-        color: $txt-54-color;
-        margin-top: 5px;
-    }
-    .cf-field {
-        position: relative;
-        width: 100%;
-        margin: 15px 0;
-        .cf-label {
-            font-size: 15px;
-            color: $txt-84-color;
-        }
-        .cf-important {
-            color: $red;
-            font-size: 13px;
-            margin-left: 5px;
-        }
-        .cf-input {
-            margin: 2.5px 0;
-        }
-        .cf-message {
-            font-size: 13px;
-            color: $txt-34-color;
-        }
+    &.float-bottom {
+        position: absolute;
+        bottom: -5px;
+        right: -5px;
     }
 }
+
 
 .card-org {
     position: relative;
@@ -724,4 +782,17 @@
             }
         }
     }
+}
+
+.card-tooltip {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 200px;
+    max-height: 300px;
+    background-color: #fff;
+    border-radius: 7.5px;
+    z-index: 1000;
+    box-shadow: 10px 10px 10px rgba(0,0,0,0.34);
+    display: none;
 }

@@ -10,10 +10,13 @@
 	@include transparantScrollBar();
 	.login-content {
 		@include post_center(relative);
-		width: 900px;
+		width: 800px;
+		height: 600px;
+		// padding: 25px;
+		// background-color: rgba($color: #fff, $alpha: 0.6);
+		box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.34);
 		background-color: #fff;
-		border-radius: 5px;
-		// border: $border1;
+		border-radius: 10px;
 		overflow: hidden;
 		@media (max-width: $max-width) {
 			@include post_none();
@@ -29,18 +32,48 @@
 		width: 350px;
 		padding: 20px;
 		background-color: #fff;
-		border-radius: 5px;
-		// border: $border1;
+		border-radius: 7.5px;
+		box-shadow: $shadow-small;
 		@media (max-width: $max-width) {
 			@include post_none();
 			margin: auto;
 			margin-top: 70px;
 			margin-bottom: 20px;
 		}
-		@media (max-width: $min-width) {
+			@media (max-width: $min-width) {
 			@include post_none();
 			width: calc(100% - 60px);
 		}
+	}
+	.login-cool {
+		position: relative;
+		width: 900px;
+		height: 550px;
+		margin: auto;
+		background-color: #fff;
+		box-shadow: $shadow;
+		@include post_top(absolut);
+		@include grid_2x(400px, 1fr);
+		@media (max-width: $max-width) {
+			@include grid_none();
+		}
+		.lc-col-1 {
+			@include column_n(1);
+		}
+		.lc-col-2 {
+			@include column_n(2);
+			position: relative;
+			width: 100%;
+			@media (max-width: $max-width) {
+				display: none;
+			}
+		}
+	}
+	.login-place {
+		position: relative;
+		width: calc(100% - 30px);
+		height: calc(100% - 30px);
+		padding: 15px;
 	}
 	.logo-faded {
 		position: relative;
@@ -52,13 +85,14 @@
 			height: 100px;
 		}
 	}
-}
-
-.app-popup-bottom {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	width: 1000px;
-	height: 500px;
-	z-index: 2000;
+	.float-label {
+		@include post_bottom(absolute);
+		bottom: 15px;
+		font-size: 10pt;
+		color: $txt-54-color;
+		a {
+			font-weight: 600;
+			color: $pos-color;
+		}
+	}
 }

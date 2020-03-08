@@ -4,13 +4,14 @@
 	color: rgba(0,0,0,0.34);
 }
 
-$hg-form: 40px;
+$hg-form: 45px;
+$hg-form-small: 33px;
 .txt {
 	width: calc(100% - 30px);
 	// height: $hg-form;
-	font-size: 13px;
+	font-size: 11pt;
 	padding: 10px 15px;
-	border-radius: 3px;
+	border-radius: 5px;
 	z-index: 1;
 	&.txt-no-shadow {
 		box-shadow: 0 0 0 0 rgba(0,0,0,0);
@@ -32,10 +33,10 @@ $hg-form: 40px;
 		background-color: #f5f5f5;
 		color: $txt-84-color;
 	}
-	&.txt-metal-color {
-		background-color: rgba($color: #000000, $alpha: 0.5);
-		color: #fff;
-	}
+	// &.txt-metal-color {
+	// 	background-color: rgba($color: #000000, $alpha: 0.5);
+	// 	color: #fff;
+	// }
 	&.txt-trans-color {
 		background-color: rgba(0,0,0,0);
 		// color: $txt-54-color;
@@ -44,12 +45,25 @@ $hg-form: 40px;
 		box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
 	}
 	&.txt-sekunder-color {
+		width: calc(100% - 15px);
+		padding: 10px 7.5px;
+		border-radius: 0;
 		background-color: #fff;
 		color: $txt-84-color;
-		border: 1px rgba(0,0,0,0.1) solid;
-	}
-	&.txt-sekunder-color:focus {
-		border: 1px $txt-84-color solid;
+		border-bottom: 2px rgba(0,0,0,0.1) solid;
+		@include animate_1();
+		&:hover {
+			background-color: #f5f5f5 !important;
+			border-bottom: 2px $blue solid;
+			@include animate_1();
+		}
+		&:focus {
+			border-bottom: 2px $blue solid;
+			@include animate_1();
+		}
+		&:read-only {
+			background-color: #f5f5f5 !important;
+		}
 	}
 	&.txt-sekunder {
 		background-color: #fff;
@@ -63,9 +77,20 @@ $hg-form: 40px;
 		box-shadow: 0 0 0 #fff;
 	}
 	&.txt-small {
-		width: 100%;
+		width: calc(100% - 20px);
 		height: 35px;
-		padding: 0;
+		padding: 0 10px;
+		font-size: 10pt;
+	}
+	&.txt-metal-color {
+		/* background-color: rgba(0, 0, 0, 0.5); */
+		color: #000;
+		border: 1px rgba(0, 0, 0, 0.1) solid; 
+		&:focus {
+			/* background-color: rgba(0, 0, 0, 0.5); */
+			color: #000;
+			border: 1px #4caf50 solid; 
+		}
 	}
 	&.edit-text {
 		min-width: calc(100% - 30px);
@@ -89,8 +114,8 @@ $hg-form: 40px;
 .slc {
 	position: relative;
 	width: calc(100% - 0px);
-	padding: 10px 10px;
-	font-size: 13px;
+	padding: 10px 15px;
+	font-size: 11pt;
 	font-weight: 600;
 	border-radius: 5px;
 	cursor: pointer;
@@ -98,9 +123,8 @@ $hg-form: 40px;
 		color: $txt-sek-color;
 	}
 	option {
-		width: calc(100% - 20px);
-		height: 40px;
-		padding: 15px 10px;
+		width: calc(100% - 30px);
+		padding: 15px;
 		color: $txt-sek-color;
 	}
 	&.slc-transparant {
@@ -121,16 +145,13 @@ $hg-form: 40px;
 /*button normal*/
 .btn {
 	position: relative;
-	padding: 0 14px;
+	padding: 0 15px;
 	height: $hg-form;
-	border-radius: 3px;
-	font-size: 10pt;
-	// font-weight: 600;
+	border-radius: $hg-form;
+	font-size: 13px;
 	text-align: center;
+	overflow: hidden;
 	cursor: pointer;
-	/*&:focus {
-		box-shadow: 0 0 0 4px $pos-color;
-	}*/
 	&.btn-width-all {
 		width: 100%;
 	}
@@ -155,14 +176,23 @@ $hg-form: 40px;
 	&.btn-radius {
 		border-radius: $hg-form;
 	}
+	&.btn-small-radius {
+		border-radius: $hg-form-small;
+	}
 	&.btn-div {
 		padding: 0 15px;
 		height: $hg-form;
 		line-height: $hg-form;
 	}
-	&.btn-small {
+	&.btn-mikro {
 		padding: 0 10px;
-		height: 35px;
+		height: 25px;
+		font-size: 11px;
+	}
+	&.btn-small {
+		padding: 0 15px;
+		height: $hg-form-small;
+		font-size: 11px;
 	}
 	&.btn-circle {
 		width: $hg-form;
@@ -171,31 +201,20 @@ $hg-form: 40px;
 		border-radius: 100%;
 		text-align: center;
 	}
-	&.btn-circle-div {
-		width: $hg-form;
-		height: $hg-form;
-		line-height: $hg-form;
-		padding: 0 0;
-		border-radius: 100%;
-		text-align: center;
-	}
 	&.btn-small-circle {
-		width: 35px;
-		height: 35px;
+		width: $hg-form-small;
+		height: $hg-form-small;
 		padding: 0 0;
 		border-radius: 100%;
 		text-align: center;
-		display: inline-block;
 	}
-	&.btn-small-circle-div {
-		width: 33px;
-		height: 33px;
-		line-height: 35px;
+	&.btn-micro-circle {
+		width: 26px;
+		height: 26px;
 		padding: 0 0;
 		border-radius: 100%;
 		text-align: center;
-		display: inline-block;
-		vertical-align: top;
+		border: 2px #fff solid;
 	}
 	&.btn-qube {
 		width: $hg-form;
@@ -224,18 +243,22 @@ $hg-form: 40px;
 		background-color: $sek-color;
 		color: $min-color;
 	}
+	&.btn-value {
+		background-color: #fff;
+		border: $border1;
+	}
 	&.btn-black {
-		background-color: rgba(0,0,0,0.1);
+		background-color: rgba(0,0,0,0.84);
 		color: #fff;
 		&:hover {
-			background-color: rgba(0,0,0,0.54);
+			background-color: rgba(0,0,0,1);
 			color: #fff;
 		}
 	}
 	&.btn-sekunder {
 		background-color: $sek-color;
 		color: $txt-sek-color;
-		border: 1px rgba(0,0,0,0.1) solid;
+		border: 1px $border solid;
 		&:hover {
 			color: $txt-min-color;
 			border: 1px rgba(0,0,0,0.2) solid;
@@ -245,11 +268,11 @@ $hg-form: 40px;
 		}
 	}
 	&.btn-primary {
-		background-color: rgba(225,225,225,0.34);
-		color: $txt-sek-color;
+		background-color: $blue;
+		color: #fff;
 		&:hover {
-			background-color: rgba(225,225,225,0.54);
-			color: $txt-min-color;
+			background-color: rgba($color: $blue, $alpha: 0.9);
+			color: #fff;
 		}
 	}
 	&.btn-grey {
@@ -284,7 +307,7 @@ $hg-form: 40px;
 		background-color: $green;
 		color: #fff;
 		&:hover {
-			background-color: rgba($color: $green, $alpha: 0.9);
+			background-color: $green;
 			color: #fff;
 		}
 	}
@@ -376,11 +399,10 @@ $hg-form: 40px;
 		right: 0;
 		background-color: $green;
 		color: #fff;
-		font-size: 12px;
-		font-weight: 600;
-		width: 18px;
-		height: 18px;
-		line-height: 18px;
+		font-size: 9pt;
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
 		text-align: center;
 		border-radius: 100%;
 	}
@@ -462,13 +484,19 @@ $hg-form: 40px;
 .input-group {
 	position: relative;
 	width: 100%;
-	height: 38px;
+	height: 43px;
 	overflow: hidden;
 	display: inline-block;
 	border-radius: 5px;
 	@include grid_2x(1fr, 50px);
 	&.input-border {
 		border: $border;
+	}
+	&.input-small {
+		height: 33px;
+	}
+	&.input-white {
+		background-color: #fff;
 	}
 	&.input-grey {
 		background-color: #f5f5f5;
@@ -493,9 +521,7 @@ $hg-form: 40px;
 
 	color: $txt-min-color;
 	font-weight: 900;
-	font-size: 13px;
-
-	// margin: 0 10px;
+	font-size: 11pt;
 
 	&:hover input ~ .checkmark {
 		background-color: #ccc;
@@ -536,62 +562,6 @@ $hg-form: 40px;
 			     -o-transform: rotate(45deg);
 			        transform: rotate(45deg);
 		}
-	}
-	.txt-site {
-		line-height: 22px;
-	}
-}
-
-.radio {
-	position: relative;
-	display: block;
-	cursor: pointer;
-	user-select: none;
-	padding-left: 30px;
-
-	color: $txt-min-color;
-	font-weight: 900;
-	font-size: 13px;
-
-	margin: 0 10px;
-
-	&:hover input ~ .checkmark {
-		background-color: #ccc;
-	}
-	input {
-		position: absolute;
-		opacity: 0;
-		width: 0;
-		height: 0;
-		&:checked ~ .checkmark {
-			background-color: $green;
-		}
-		&:checked ~ .checkmark:after {
-			display: block;
-		}
-	}
-	.checkmark {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 22px;
-		height: 22px;
-		border-radius: 22px;
-		background-color: #eee;
-		&:after {
-			content: "";
-			position: absolute;
-			display: none;
-			left: 5px;
-			top: 5px;
-			width: 12px;
-			height: 12px;
-			background-color: #fff;
-			border-radius: 12px;
-		}
-	}
-	.txt-site {
-		line-height: 22px;
 	}
 }
 
@@ -769,15 +739,15 @@ $hg-form: 40px;
 	width: 100%;
 	padding: 5px 0;
 	legend {
-		font-size: 26px;
+		font-size: 24pt;
 		font-weight: 600;
 		color: $txt-84-color;
-		margin: 0 0;
+		margin: 10px 0;
 	}
 	.field-description {
-		font-size: 14px;
+		font-size: 11pt;
 		color: $txt-54-color;
-		margin: 10px 0 10px 0;
+		margin: 10px 0 20px 0;
 	}
 	.field-string {
 		margin: 10px 0;
@@ -785,7 +755,7 @@ $hg-form: 40px;
 	.control-label {
 		position: relative;
 		width: 100%;
-		font-size: 13px;
+		font-size: 11pt;
 		color: $txt-84-color;
 		font-weight: 600;
 		margin-bottom: 5px;
@@ -804,7 +774,7 @@ $hg-form: 40px;
 .form-control {
 	position: relative;
 	width: calc(100% - 30px);
-	font-size: 13px;
+	font-size: 11pt;
 	padding: 10px 15px;
 	border-radius: 5px;
 	background-color: $sek-color;
@@ -846,103 +816,10 @@ $hg-form: 40px;
 	padding: 15px;
 	.list-group-item {
 		list-style: none;
-		font-size: 13px;
+		font-size: 11pt;
 		text-transform: capitalize;
 		&.text-danger {
 			color: $red;
-		}
-	}
-}
-
-.upload-image {
-	position: relative;
-	width: calc(100% - 2px);
-	border: 1px #999 dashed;
-	border-radius: 7.5px;
-	overflow: hidden;
-	&:hover {
-		background-color: #f5f5f5;
-		// cursor: pointer;
-		.u-i-info {
-			display: none;
-			@include animate_1();
-		}
-	}
-	.u-i-info {
-		@include post_center(absolute);
-		// position: relative;
-		// width: 100%;
-		text-align: center;
-		.u-i-icon {
-			color: $txt-54-color;
-			font-size: 14pt;
-			display: inline-block;
-			vertical-align: middle;
-			margin-right: 10px;
-		}
-		.u-i-label {
-			color: $txt-54-color;
-			font-size: 12pt;
-			display: inline-block;
-			vertical-align: top;
-		}
-	}
-	.u-i-image {
-		position: relative;
-		width: 100%;
-		height: 200px;
-		&:hover {
-			.u-i-btn {
-				display: flex;
-				@include animate_1();
-			}
-		}
-		.u-i-btn {
-			@include post_center(absolute);
-			display: none;
-			.btn {
-				margin: 0 5px;
-				border: $border1;
-			}
-		}
-	}
-}
-
-.upload-file {
-	position: relative;
-	width: calc(100% - 30px);
-	padding: 15px;
-	border-radius: 5px;
-	background-color: rgba($color: #555555, $alpha: 0.10);
-	&:hover {
-		background-color: rgba($color: #555555, $alpha: 0.14);
-	}
-	.u-p-title {
-		text-align: center;
-		font-size: 13px;
-		font-weight: 600;
-		color: $txt-84-color;
-	}
-
-	.u-p-preview {
-		position: relative;
-		width: calc(100% - 30px);
-		padding: 15px;
-		border-radius: 5px;
-		margin: 15px 0;
-		background-color: rgba($color: #000000, $alpha: 0.84);
-	}
-
-	.u-p-top {
-		position: relative;
-		width: 100%;
-		@include grid_2x(1fr, 300px);
-		.u-p-top-left {
-			text-align: left;
-		}
-		.u-p-top-right {
-			text-align: right;
-			justify-content: right;
 		}
 	}
 }

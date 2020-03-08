@@ -19,6 +19,8 @@ exports.customTable = function () {
           responsiveScroll: {
             position: 'relative',
             width: '100% !important',
+            // height: 'calc(100vh - 195px)',
+            // maxHeight: 'calc(100vh - 195px)'
           }
         },
         MuiToolbar: {
@@ -101,7 +103,7 @@ exports.customTable = function () {
           fixedHeader: {
             position: "relative",
             borderBottom: "1px rgba(0,0,0,0.1) solid",
-            backgroundColor: secondColor,
+            // backgroundColor: secondColor,
             color: "#555",
             padding: "10px",
             height: "auto"

@@ -7,7 +7,7 @@ class Statistic extends Component {
         <div className="padding-10px background-white border-bottom">
           <div className="txt-site txt-bold text-main txt-12">Statistik</div>
         </div>
-        <div className="padding-15px">
+        <div className="padding-15px display-flex-column">
           <div className="margin-10px txt-site txt-primary txt-12">
               Customers
           </div>

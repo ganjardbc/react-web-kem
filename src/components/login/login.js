@@ -73,7 +73,7 @@ class Login extends Component {
             <HashRouter history={Router.browserHistory}>
                 <div className="main-content">
                     <LoadingBar onRef={ref => (this.LoadingBar = ref)} />
-                    <div className="app-login background-green">
+                    <div className="app-login background-grey">
                         <div className="login-small">
                             {/* <div className="logo-faded">
                                 <div
@@ -99,6 +99,7 @@ class Login extends Component {
                                     <input
                                         type="text"
                                         className="txt txt-sekunder-color"
+                                        placeholder='10101010'
                                         value={this.state.nisn}
                                         onChange={this.handleChangenisn}
                                         required></input>
@@ -109,6 +110,7 @@ class Login extends Component {
                                     </div>
                                     <input
                                         type="password"
+                                        placeholder='password'
                                         className="txt txt-sekunder-color"
                                         value={this.state.password}
                                         onChange={this.handleChangePassword}
@@ -118,7 +120,7 @@ class Login extends Component {
                                     <input
                                         type="submit"
                                         value="Sign In"
-                                        className="btn btn-width-all background-green">
+                                        className="btn btn-width-all btn-primary">
                                     </input>
                                 </div>
                             </form>

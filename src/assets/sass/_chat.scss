@@ -174,30 +174,29 @@ $mainHeight: 100px;
         .c-m-top {
             position: relative;
             width: 100%;
-            padding: 10px 0;
+            padding: 15px 0;
             text-align: left !important;
             @include grid_2x(1fr, 80px);
             .c-m-name {
-                font-size: 12px;
+                font-size: 11pt;
                 font-weight: 600;
             }
             .c-m-date {
-                font-size: 12px;
+                font-size: 10pt;
             }
         }
         .c-m-mid {
             position: relative;
             width: 100%;
-            padding: 10px 0 10px 0;
-            font-size: 13px;
-            line-height: 20px;
+            padding: 15px 0 20px 0;
+            font-size: 11pt;
             color: $txt-84-color;
             text-align: left !important;
         }
     }
     &.c-m-left {
-        @include grid_2x(40px, 1fr);
-        @include grid_gap(10px);
+        @include grid_2x(45px, 1fr);
+        @include grid_gap(20px);
         .c-m-col-1 {
             @include column_n(1);
         }
@@ -305,7 +304,7 @@ $chatPopupHeight: 450px;
 		width: calc(100% - 20px);
 		padding: 10px;
 		// border-bottom: $border;
-		@include grid_2x(35px, 1fr);
+		@include grid_2x(40px, 1fr);
 		@include grid_gap(10px);
 		.col-1 {
 			@include column_n(1);
@@ -314,19 +313,18 @@ $chatPopupHeight: 450px;
 			@include column_n(2);
 		}
 		.c-p-name {
-			font-size: 13px;
+			font-size: 11pt;
 			font-weight: 600;
-			line-height: 20px;
-			color: $txt-84-color;
+			color: #fff;
 			text-align: left !important;
 		}
 		.c-p-status {
 			text-align: left !important;
 		}
 		.c-p-message {
-			font-size: 13px;
+			font-size: 10pt;
 			font-weight: 500;
-			color: $txt-54-color;
+			color: #f8f8f8;
 			text-align: left !important;
 		}
 		&:hover {

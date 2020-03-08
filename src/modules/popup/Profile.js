@@ -41,7 +41,7 @@ class Profile extends Component {
           className={this.state.smallProfileClass}
           style={{ float: 'right' }}>
           <div className="asp-col-1">
-            <div className="image image-circle image-30px background-green">
+            <div className="image image-30px background-green">
               <img width="100%" height="100%" />
             </div>
           </div>

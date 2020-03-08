@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import MUIDataTable from "mui-datatables-bitozen";
-import LoadingBar from "react-top-loading-bar";
-import PopUp from "../../pages/PopUpAlert";
+// import PopUp from "../../pages/PopUpAlert";
 import api from "../../services/Api";
 import FormStudents from "./formStudents";
-import M from 'moment';
+import FormKem from "./formKem";
+// import M from 'moment';
 
 let ct = require("../../modules/custom/customTable")
 
@@ -21,6 +21,8 @@ class Students extends Component {
             createVisible: false,
             editVisible: false,
             deletePopUpVisible: false,
+            linearProgress: false,
+            formKemVisible: false,
             selectedIndex: 0,
             limit: 5,
             number: 0,
@@ -30,8 +32,11 @@ class Students extends Component {
     }
 
     componentDidMount() {
-        this.startFetch()
         this.getData(this.state.limit, this.state.number)
+    }
+
+    linearProgress = () => {
+        this.setState({ linearProgress: !this.state.linearProgress })
     }
 
     async getCountData() {
@@ -51,6 +56,8 @@ class Students extends Component {
     }
 
     async getData(limit, number) {
+        this.linearProgress()
+
         let params = {
             "id_user": 1
         }
@@ -58,11 +65,11 @@ class Students extends Component {
         let response = await api.create('MAIN').getAllPagingSiswa(params)
         if (response.status === 200 && response.data.status === 'S') {
             let dataTable = response.data.data.map((value, index) => {
-                let {id, nisin, username, nama, kelas, email, sekolah, id_avatar} = value
+                let {id, nisn, username, nama, kelas, email, sekolah, id_avatar} = value
                 return [
                     index += 1,
                     id, 
-                    nisin,
+                    nisn,
                     username,
                     nama,
                     kelas,
@@ -72,26 +79,23 @@ class Students extends Component {
                 ]
             })
             this.setState({
-                rawData: response.data,
+                rawData: response.data.data,
                 dataTable
             })
-            this.onFinishFetch()
-            // console.log('succ', response)
+            this.linearProgress()
         } else {
             if (response.data && response.data.message) alert(response.data.message)
-            this.onFinishFetch()
+            this.linearProgress()
         }
     }
 
     handleSubmit = async (data) => {
         let payload = {
-            ...data,
-            birthDate: M(data.birthDate).format("YYYY-MM-DD")
+            ...data
         }
-        console.log(payload)
-        let response = await api.create('Students').postStudents(payload)
+        let response = await api.create('MAIN').createSiswa(payload)
         if (response.ok && response.status === 200) {
-            this.setState({ createVisible: false, editVisible: false })
+            this.openCreateForm()
             this.getData(this.state.limit, this.state.number)
         } else {
             if (response.data && response.data.message) alert(response.data.message)
@@ -100,32 +104,43 @@ class Students extends Component {
     }
 
     handleUpdate = async (data) => {
-        let payload = {
-            ...data,
-            birthDate: M(data.birthDate).format("YYYY-MM-DD")
+        var a = window.confirm('ubah data ini?')
+        if (a) {
+            let payload = {
+                ...data,
+                "id_user": 1,
+                "id_siswa": this.state.rawData[this.state.selectedIndex].id
+            }
+            let response = await api.create('MAIN').updateSiswa(payload)
+            if (response.ok && response.status === 200) {
+                this.openEditForm()
+                this.getData(this.state.limit, this.state.number)
+            } else {
+                if (response.data && response.data.message) alert(response.data.message)
+            }
+            console.log(response)
         }
-        let response = await api.create('Students').putStudents(payload)
-        if (response.ok && response.status === 200) {
-            this.setState({ createVisible: false, editVisible: false })
-            this.getData(this.state.limit, this.state.number)
-        } else {
-            if (response.data && response.data.message) alert(response.data.message)
-        }
-        console.log(response)
     }
 
-    handleDelete = async (data) => {
-        let payload = {
-            "id": this.state.rawData[this.state.selectedIndex].id,
+    handleDelete = async (index) => {
+        var a = window.confirm('hapus data ini?')
+        if (a) {
+            let payload = {
+                "id_user": 1,
+                "nisn": index,
+            }
+            let response = await api.create('MAIN').deleteSiswa(payload)
+            if (response.ok && response.status === 200) {
+                this.getData(this.state.limit, this.state.number)
+            } else {
+                if (response.data && response.data.message) alert(response.data.message)
+            }
+            console.log(response)
         }
-        let response = await api.create('Students').deleteStudents(payload.id)
-        if (response.ok && response.status === 200) {
-            this.setState({ deletePopUpVisible: false })
-            this.getData(this.state.limit, this.state.number)
-        } else {
-            if (response.data && response.data.message) alert(response.data.message)
-        }
-        console.log(payload)
+    }
+
+    openFormKem = (index = null) => {
+        this.setState({ formKemVisible: !this.state.formKemVisible, selectedIndex: index })
     }
 
     openCreateForm = () => {
@@ -134,19 +149,12 @@ class Students extends Component {
 
     openEditForm = (index = null) => {
         this.setState({ editVisible: !this.state.editVisible, selectedIndex: index })
+        console.log(this.state.rawData[index])
     };
  
     openDeletePopup = (index) => {
         this.setState({ deletePopUpVisible: !this.state.deletePopUpVisible, selectedIndex: index })
     };
-
-    startFetch = () => {
-        this.LoadingBar.continousStart()
-    }
-
-    onFinishFetch = () => {
-        if (typeof this.LoadingBar === "object") this.LoadingBar.complete()
-    }
 
     getMuiTheme = () => createMuiTheme(ct.customTable());
 
@@ -167,19 +175,26 @@ class Students extends Component {
             options: {
                 customBodyRender: (val, tableMeta) => {
                     return (
-                        <div className="display-flex-normal">
+                        <div style={{width: '160px'}} className="display-flex-normal">
                             <button
-                                className="btn btn-green btn-small-circle"
+                                className="btn btn-small btn-primary btn-radius"
                                 style={{ marginRight: 5 }}
-                                onClick={() =>
-                                    this.openEditForm(tableMeta.rowIndex)
-                                }
+                                onClick={() => {
+                                    this.openFormKem(tableMeta.rowData[1])
+                                }}
+                            >
+                                Hasil Kem
+                            </button>
+                            <button
+                                className="btn btn-primary btn-small-circle"
+                                style={{ marginRight: 5 }}
+                                onClick={() => this.openEditForm(tableMeta.rowIndex)}
                             >
                                 <i className="fa fa-lw fa-pencil-alt" />
                             </button>
                             <button
-                                className="btn btn-red btn-small-circle"
-                                onClick={() => this.openDeletePopup(tableMeta.rowIndex)}>
+                                className="btn btn-primary btn-small-circle"
+                                onClick={() => this.handleDelete(tableMeta.rowData[2])}>
                                 <i className="fa fa-lw fa-trash-alt" />
                             </button>
                         </div>
@@ -219,16 +234,16 @@ class Students extends Component {
         }
         return (
             <div className="main-content">
-                <LoadingBar onRef={ref => (this.LoadingBar = ref)} />
                 <div className="padding-5px">
                     <MuiThemeProvider theme={this.getMuiTheme()}>
                         <MUIDataTable
-                            title={"Murid"}
+                            title={"Siswa"}
                             key={positionCount}
                             data={this.state.dataTable}
                             columns={this.columns}
                             options={tableOptions}
                             buttonCreate={true}
+                            linearProgress={this.state.linearProgress}
                             onCreate={this.openCreateForm.bind(this)}
                         />
                     </MuiThemeProvider>
@@ -237,27 +252,24 @@ class Students extends Component {
                 {this.state.createVisible && (
                     <FormStudents
                         type={"create"}
-                        tablePosition={this.state.dataTablePosition}
                         onClickClose={this.openCreateForm}
-                        onSave={this.handleSubmit.bind(this)}
-                    />
-                )}
-                {this.state.editVisible && (
-                    <FormStudents
-                        type={"edit"}
-                        tablePosition={this.state.dataTablePosition}
-                        payload={this.state.rawData[this.state.selectedIndex]}
-                        onClickClose={this.openEditForm}
-                        onSave={this.handleUpdate.bind(this)}
+                        onClickSave={this.handleSubmit.bind(this)}
                     />
                 )}
 
-                {this.state.deletePopUpVisible && (
-                    <PopUp
-                        type={"delete"}
-                        class={"app-popup app-popup-show"}
-                        onClickDelete={this.handleDelete}
-                        onClick={this.openDeletePopup}
+                {this.state.editVisible && (
+                    <FormStudents
+                        type={"edit"}
+                        payload={this.state.rawData[this.state.selectedIndex]}
+                        onClickClose={this.openEditForm}
+                        onClickSave={this.handleUpdate.bind(this)}
+                    />
+                )}
+
+                {this.state.formKemVisible && (
+                    <FormKem
+                        id_user={this.state.rawData[this.state.selectedIndex].id}
+                        onClickClose={this.openFormKem}
                     />
                 )}
             </div>

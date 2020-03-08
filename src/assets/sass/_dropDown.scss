@@ -1,4 +1,4 @@
-$dd-height: 40px;
+$dd-height: 45px;
 
 .drop-down {
     position: relative;
@@ -7,22 +7,24 @@ $dd-height: 40px;
     background-color: #fff;
     &:hover {
         .dd-border {
-            border: $border2;
+            // border: $border2;
+            border-bottom: 2px $blue solid;
+            border-radius: 0;
             cursor: pointer;
         }
-        .dd-place {
-            border-left: $border2;
-            border-right: $border2;
-            border-bottom: $border2;
-        }
+        // .dd-place {
+        //     border-left: $border2;
+        //     border-right: $border2;
+        //     border-bottom: $border2;
+        // }
     }
     &.active {
-        z-index: 1000;
+        z-index: 10;
         .dd-selected {
             .dd-icon {
                 .icon {
                     &:after {
-                        top: 8px;
+                        top: 10px;
                         @include animate_1();
                         -webkit-transform: rotate(-135deg);
                            -moz-transform: rotate(-135deg);
@@ -34,20 +36,20 @@ $dd-height: 40px;
             }
         }
         .dd-border {
-            border: $border2;
+            border-bottom: 2px $blue solid;
             cursor: pointer;
         }
         .dd-place {
-            border-left: $border2;
-            border-right: $border2;
-            border-bottom: $border2;
+            // border-left: $border2;
+            // border-right: $border2;
+            // border-bottom: $border2;
             display: block;
             @include animate_1();
         }
     }
     .dd-border {
-        border: $border1;
-        border-radius: 5px;
+        border-bottom: 2px rgba(0,0,0,0.1) solid;
+        border-radius: 0;
     }
     .dd-selected {
         position: relative;
@@ -56,14 +58,14 @@ $dd-height: 40px;
         display: flex;
         .dd-title {
             position: relative;
-            width: calc(100% - 30px);
-            padding: 0 15px;
+            width: calc(100% - 10px);
+            padding: 0 5px;
             .title {
                 @include post_top(absolute);
-                left: 15px;
+                left: 5px;
                 font-size: 13px;
                 font-weight: 600;
-                color: $txt-84-color;
+                color: $txt-54-color;
                 text-transform: capitalize;
             }
         }
@@ -75,14 +77,14 @@ $dd-height: 40px;
                 height: 15px;
                 border-radius: 2px;
                 right: 10px;
-                top: 10px;
+                top: 8px;
                 opacity: 1;
                 &:after {
                     @include animate_1();
                     content: "";
                     position: absolute;
                     left: 0;
-                    top: 3px;
+                    top: 8px;
                     width: 7px;
                     height: 7px;
                     border: solid rgba($color: #000, $alpha: 0.7);
@@ -98,14 +100,14 @@ $dd-height: 40px;
     }
     .dd-place {
         position: absolute;
-        top: 38px;
+        top: 44px;
         left: 0;
         width: calc(100% - 2px);
-        border-left: $border1;
-        border-right: $border1;
-        border-bottom: $border1;
+        // border-left: $border1;
+        // border-right: $border1;
+        // border-bottom: $border1;
         background-color: #fff;
-        // box-shadow: $shadow;
+        box-shadow: $shadow;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
         overflow: hidden;

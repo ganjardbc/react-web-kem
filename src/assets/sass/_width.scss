@@ -34,9 +34,9 @@
 //width
 @mixin width($val) {
 	width: $val;
-	// @media (max-width: $max-width) {
-	// 	width: 100%;
-	// }
+	@media (max-width: $max-width) {
+		width: 100%;
+	}
 }
 
 .width {

@@ -93,12 +93,22 @@
 			flex: 1 1 calc(100% - 1em);
 		}
 	}
+	&.mobile {
+		@media (max-width: $max-width) {
+			display: block;
+		}
+	}
 }
 
 .display-flex-normal {
 	position: relative;
 	display: flex;
 	flex-wrap: nowrap;
+	&.mobile {
+		@media (max-width: $max-width) {
+			display: block;
+		}
+	}
 }
 
 .display-flex-mobile {
@@ -110,4 +120,27 @@
 	@media (max-width: $max-width) {
 		display: block;
 	}
+}
+
+.display-flex-column {
+	position: relative;
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	justify-content: space-between;
+	@media (max-width: $max-width) {
+		display: block;
+	}
+}
+
+.float-top-right {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+.float-top-left {
+	position: absolute;
+	top: 15px;
+	left: 15px;
 }

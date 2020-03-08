@@ -8,6 +8,8 @@ import './App.css';
 import Texts from './components/texts/texts'
 import Students from './components/students/students'
 import Training from './components/training/training'
+import Kem from './components/kem/kem'
+import Qa from './components/qa/qa'
 
 // icon
 let angle = 'fa fa-lg fa-angle-right'
@@ -53,6 +55,20 @@ class App extends Component {
     }
   }
 
+  createSubMenu = (icon, val, link) => {
+    return (
+      <NavLink to={link}>
+        <li className="content">
+          <div className="list">
+              <div className="icn"><i className={icon}></i></div>
+              <div className="ttl">{val}</div>
+              <div className="icn txt-site txt-right txt-12"></div>
+          </div>
+        </li>
+      </NavLink>
+    )
+  }
+
   render() {
     return (
       <HashRouter history={Router.browserHistory}>
@@ -66,10 +82,10 @@ class App extends Component {
           {/* Multiple Page */}
           <div className={this.state.appClass}>
             <div className="app-slide">
-              <div className="slide-content background-green">
+              <div className="slide-content background-white">
                 <div className="app-title">
                   <div className="col-1">
-                    <h1 className="txt-site txt-white txt-upp txt-18 txt-bold post-center margin-left-10px">
+                    <h1 className="txt-site txt-main txt-upp txt-18 txt-bold post-center margin-left-10px">
                       ADMIN KEM
                     </h1>
                   </div>
@@ -82,85 +98,41 @@ class App extends Component {
                   </div>
                 </div>
                 {/* menu */}
-                <div className="slide-list change-scrollbar">
+                <div className="slide-content-place change-scrollbar">
                   <div className="app-space">
-                    <input type="radio" name="mainmenu" id="mainmenu-dashboard" />
-                    <NavLink to='/home'>
-                      <label htmlFor="mainmenu-dashboard" className="list">
-                        <span className="app-space-icon">
-                          <i className="fa fa-1x fa-home" />
-                        </span>
-                        <span className="app-space-text">
-                          DASHBOARD
-                        </span>
-                      </label>
-                    </NavLink>
+                    DASHBOARD
                   </div>
+                  <ul className="app-menu">
+                    {this.createSubMenu('fa fa-lg fa-home', 'Dashboard', '/home')}
+                  </ul>
+
                   <div className="app-space">
-                    <input type="radio" name="mainmenu" id="mainmenu-dashboard" />
-                    <NavLink to='/training'>
-                      <label htmlFor="mainmenu-dashboard" className="list">
-                        <span className="app-space-icon">
-                          <i className="fa fa-1x fa-book" />
-                        </span>
-                        <span className="app-space-text">
-                          DATA LATIHAN
-                        </span>
-                      </label>
-                    </NavLink>
+                    MASTERDATA
                   </div>
+                  <ul className="app-menu">
+                    {this.createSubMenu('fa fa-lg fa-running', 'Data Latihan', '/training')}
+                    {this.createSubMenu('fa fa-lg fa-book', 'Data Bacaan', '/texts')}
+                    {/* {this.createSubMenu('fa fa-lg fa-question', 'Data Soal & Jawaban', '/qa')} */}
+                    {this.createSubMenu('fa fa-lg fa-users', 'Data Murid', '/students')}
+                    {this.createSubMenu('fa fa-lg fa-chart-pie', 'Data Hasil KEM', '/kem')}
+                  </ul>
+
                   <div className="app-space">
-                    <input type="radio" name="mainmenu" id="mainmenu-dashboard" />
-                    <NavLink to='/students'>
-                      <label htmlFor="mainmenu-dashboard" className="list">
-                        <span className="app-space-icon">
-                          <i className="fa fa-1x fa-users" />
-                        </span>
-                        <span className="app-space-text">
-                          DATA MURID
-                        </span>
-                      </label>
-                    </NavLink>
+                    AKUN
                   </div>
+                  <ul className="app-menu">
+                    {/* {this.createSubMenu('fa fa-lg fa-cogs', 'Pengaturan Akun', '/404')} */}
+                    {this.createSubMenu('fa fa-lg fa-key', 'Ubah Password', '/404')}
+                    {this.createSubMenu('fa fa-lg fa-mask', 'Ubah Avatar', '/404')}
+                  </ul>
+
                   <div className="app-space">
-                    <input type="radio" name="mainmenu" id="mainmenu-dashboard" />
-                    <NavLink to='/home'>
-                      <label htmlFor="mainmenu-dashboard" className="list">
-                        <span className="app-space-icon">
-                          <i className="fa fa-1x fa-list" />
-                        </span>
-                        <span className="app-space-text">
-                          DATA HASIL KEM
-                        </span>
-                      </label>
-                    </NavLink>
+                    LAINNYA
                   </div>
-                  <div className="app-space">
-                    <input type="radio" name="mainmenu" id="mainmenu-dashboard" />
-                    <NavLink to='/home'>
-                      <label htmlFor="mainmenu-dashboard" className="list">
-                        <span className="app-space-icon">
-                          <i className="fa fa-1x fa-cogs" />
-                        </span>
-                        <span className="app-space-text">
-                          PENGATURAN AKUN
-                        </span>
-                      </label>
-                    </NavLink>
-                  </div>
-                  <div className="app-space">
-                    <input type="radio" name="mainmenu" id="mainmenu-dashboard" />
-                    <NavLink to='/'>
-                      <label htmlFor="mainmenu-dashboard" className="list">
-                        <span className="app-space-icon">
-                          <i className="fa fa-1x fa-power-off" />
-                        </span>
-                        <span className="app-space-text">
-                          LOGOUT
-                        </span>
-                      </label>
-                    </NavLink>
-                  </div>
+                  <ul className="app-menu">
+                    {this.createSubMenu('fa fa-lg fa-power-off', 'Logout', '/404')}
+                  </ul>
+
                 </div>
               </div>
             </div>
@@ -190,6 +162,8 @@ class App extends Component {
                 <Route exact path="/texts" component={Texts} />
                 <Route exact path="/students" component={Students} />
                 <Route exact path="/training" component={Training} />
+                <Route exact path="/kem" component={Kem} />
+                <Route exact path="/qa" component={Qa} />
               </div>
             </div>
           </div>

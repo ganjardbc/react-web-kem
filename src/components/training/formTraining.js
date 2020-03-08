@@ -21,8 +21,8 @@ class FormPosition extends Component {
         return (
             <div className={"app-popup app-popup-show"}>
                 <div className="padding-top-20px" />
-                <div className="popup-content-mikro background-white border-radius">
-                    <div className="padding-15px background-green grid grid-2x">
+                <div className="popup-content background-white border-radius">
+                    <div className="border-bottom padding-15px grid grid-2x">
                         <div className="col-1">
                             <div className="txt-site txt-12 txt-bold post-center">
                                 {this.props.type === "create"
@@ -34,7 +34,7 @@ class FormPosition extends Component {
                         </div>
                         <div className="col-2 content-right">
                             <button
-                                className="btn btn-circle background-green"
+                                className="btn btn-circle btn-grey"
                                 onClick={this.props.onClickClose}
                             >
                                 <i className="fa fa-lg fa-times" />
@@ -82,7 +82,7 @@ class FormPosition extends Component {
                                     {this.props.type !== "view" ? (
                                         <button
                                             style={{ marginLeft: "15px" }}
-                                            className="btn btn-green"
+                                            className="btn btn-primary"
                                             type="submit"
                                         >
                                         <span>SAVE</span>
@@ -90,7 +90,7 @@ class FormPosition extends Component {
                                     ) : null}
                                     <button
                                         style={{ marginLeft: "15px" }}
-                                        className="btn btn-white"
+                                        className="btn btn-primary"
                                         type="button"
                                         onClick={this.props.onClickClose}
                                     >
