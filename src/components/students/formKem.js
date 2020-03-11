@@ -23,7 +23,6 @@ class PageKem extends Component {
         this.linearProgress()
 
         let param = {
-            "id_user": 1,
             "id_user": this.props.id_user
         }
 

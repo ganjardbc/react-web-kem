@@ -56,11 +56,10 @@ class Kem extends Component {
     async getData(limit, number) {
         this.linearProgress()
 
-        let params = {
-            "id_user": 1
-        }
+        let params = {}
 
         let response = await api.create('MAIN').getAllPagingKem(params)
+        console.log(response)
         if (response.status === 200 && response.data.status === 'S') {
             let dataTable = response.data.data.map((value, index) => {
                 let {id, nilai, waktu, jumlah_benar, bacaan, user} = value
@@ -75,7 +74,7 @@ class Kem extends Component {
                 ]
             })
             this.setState({
-                rawData: response.data,
+                rawData: response.data.data,
                 dataTable
             })
             this.linearProgress()
